@@ -3325,6 +3325,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"angular-gridster2@npm:^18.0.1":
+  version: 18.0.1
+  resolution: "angular-gridster2@npm:18.0.1"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    "@angular/common": ^18.0.0
+    "@angular/core": ^18.0.0
+    rxjs: ^7.0.0
+  checksum: 10c0/ba32478f87aef2794f25548a0bb515ff2f215e62d343acc6a1b70f9aa1ae5ce83a4188089453882383a8da5082202311f147f0e5014243e240d0c3fb11b8b607
+  languageName: node
+  linkType: hard
+
 "ansi-colors@npm:4.1.3":
   version: 4.1.3
   resolution: "ansi-colors@npm:4.1.3"
@@ -5976,6 +5989,7 @@ __metadata:
     "@angular/platform-browser-dynamic": "npm:^18.0.0"
     "@angular/router": "npm:^18.0.0"
     "@types/jasmine": "npm:~5.1.0"
+    angular-gridster2: "npm:^18.0.1"
     autoprefixer: "npm:^10.4.19"
     jasmine-core: "npm:~5.1.0"
     karma: "npm:~6.4.0"
@@ -8999,7 +9013,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0, tslib@npm:^2.1.0, tslib@npm:^2.3.0":
+"tslib@npm:^2.0.0, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.4.0":
   version: 2.6.3
   resolution: "tslib@npm:2.6.3"
   checksum: 10c0/2598aef53d9dbe711af75522464b2104724d6467b26a60f2bdac8297d2b5f1f6b86a71f61717384aa8fd897240467aaa7bcc36a0700a0faf751293d1331db39a

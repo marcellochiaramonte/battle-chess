@@ -1,37 +1,44 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { SquareComponent } from '../square/square.component';
+import { GridsterComponent, GridsterItemComponent } from 'angular-gridster2';
 
-enum Piece {
-  WHITE_PAWN = '♙',
-  WHITE_ROOK = '♖',
-  WHITE_KNIGHT = '♘',
-  WHITE_BISHOP = '♗',
-  WHITE_QUEEN = '♕',
-  WHITE_KING = '♔',
+export enum Piece {
+  WHITE_PAWN = 'WHITE_PAWN',
+  WHITE_ROOK = 'WHITE_ROOK',
+  WHITE_KNIGHT = 'WHITE_KNIGHT',
+  WHITE_BISHOP = 'WHITE_BISHOP',
+  WHITE_QUEEN = 'WHITE_QUEEN',
+  WHITE_KING = 'WHITE_KING',
 
-  BLACK_PAWN = '♟',
-  BLACK_ROOK = '♜',
-  BLACK_KNIGHT = '♞',
-  BLACK_BISHOP = '♝',
-  BLACK_QUEEN = '♛',
-  BLACK_KING = '♚',
+  BLACK_PAWN = 'BLACK_PAWN',
+  BLACK_ROOK = 'BLACK_ROOK',
+  BLACK_KNIGHT = 'BLACK_KNIGHT',
+  BLACK_BISHOP = 'BLACK_BISHOP',
+  BLACK_QUEEN = 'BLACK_QUEEN',
+  BLACK_KING = 'BLACK_KING',
 }
+
+export type Board = Map<string, Piece>;
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    SquareComponent,
+    GridsterComponent,
+    GridsterItemComponent,
+  ],
   template: `
     <div class="p-4 bg-gray">
       <div class="grid grid-cols-8 outline-1 outline-color-black">
         <ng-container *ngFor="let row of rows">
           <ng-container *ngFor="let col of cols">
-            <div
-              class="w-12 h-12 grid place-content-center"
-              [ngClass]="getSquareColor(col + row)"
-            >
-              {{ board.get(col + row) }}
-            </div>
+            <app-square
+              [position]="col + row"
+              [board]="defaultBoard"
+            ></app-square>
           </ng-container>
         </ng-container>
       </div>
@@ -39,12 +46,10 @@ enum Piece {
   `,
 })
 export class BoardComponent {
-  light = 'bg-white';
-  dark = 'bg-lime-700 text-white';
   cols = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   rows = ['1', '2', '3', '4', '5', '6', '7', '8'].reverse();
 
-  board: Map<string, Piece> = new Map([
+  defaultBoard: Board = new Map([
     // White figures
     ['a1', Piece.WHITE_ROOK],
     ['b1', Piece.WHITE_KNIGHT],
@@ -82,11 +87,4 @@ export class BoardComponent {
     ['g8', Piece.BLACK_KNIGHT],
     ['h8', Piece.BLACK_ROOK],
   ]);
-
-  getSquareColor(square: string): string {
-    if (square.charCodeAt(0) % 2) {
-      return parseInt(square.charAt(1)) % 2 ? this.dark : this.light;
-    }
-    return parseInt(square.charAt(1)) % 2 ? this.light : this.dark;
-  }
 }
