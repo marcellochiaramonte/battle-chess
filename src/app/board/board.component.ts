@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { SquareComponent } from '../square/square.component';
 import { GridsterComponent, GridsterItemComponent } from 'angular-gridster2';
 
@@ -31,17 +31,24 @@ export type Board = Map<string, Piece>;
     GridsterItemComponent,
   ],
   template: `
-    <div class="p-4 bg-gray">
-      <div class="grid grid-cols-8 outline-1 outline-color-black">
-        <ng-container *ngFor="let row of rows">
-          <ng-container *ngFor="let col of cols">
-            <app-square
-              [position]="col + row"
-              [board]="defaultBoard"
-            ></app-square>
+    <div>
+      <div class="p-4 bg-gray">
+        <div class="grid grid-cols-8 outline-1 outline-color-black">
+          <ng-container *ngFor="let row of rows">
+            <ng-container *ngFor="let col of cols">
+              <app-square [position]="col + row" [board]="board"></app-square>
+            </ng-container>
           </ng-container>
-        </ng-container>
+        </div>
       </div>
+
+      <gridster [options]="options">
+        @for (item of board; track item) {
+        <gridster-item [item]="item">
+          <div>item</div>
+        </gridster-item>
+        }
+      </gridster>
     </div>
   `,
 })
@@ -49,7 +56,54 @@ export class BoardComponent {
   cols = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   rows = ['1', '2', '3', '4', '5', '6', '7', '8'].reverse();
 
-  defaultBoard: Board = new Map([
+  options = {};
+
+  constructor() {
+    this.convertCartesianToXY('a1'),
+      this.convertCartesianToXY('b2'),
+      this.convertCartesianToXY('c3'),
+      this.convertCartesianToXY('d4'),
+      this.convertCartesianToXY('e5'),
+      this.convertCartesianToXY('f6'),
+      this.convertCartesianToXY('g7'),
+      this.convertCartesianToXY('h8');
+
+    this.translateXYToCartesian(0, 0);
+    this.translateXYToCartesian(1, 1);
+    this.translateXYToCartesian(2, 2);
+    this.translateXYToCartesian(7, 7);
+  }
+
+  convertCartesianToXY(position: string) {
+    const offset = 'a'.charCodeAt(0);
+    const translation = {
+      x: position.charCodeAt(0) - offset,
+      y: 8 - parseInt(position.charAt(1)),
+    };
+    console.log({
+      position: position,
+      translation: translation,
+    });
+
+    return translation;
+  }
+
+  translateXYToCartesian(x: number, y: number) {
+    const offset = 'a'.charCodeAt(0);
+    const position = String.fromCharCode(offset + x).concat((8 - y).toString());
+
+    console.log({
+      position: position,
+      translation: {
+        x: x,
+        y: y,
+      },
+    });
+
+    return position;
+  }
+
+  board: Board = new Map([
     // White figures
     ['a1', Piece.WHITE_ROOK],
     ['b1', Piece.WHITE_KNIGHT],
