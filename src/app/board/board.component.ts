@@ -41,7 +41,7 @@ export type Board = Map<string, Piece>;
           </ng-container>
         </div>
       </div>
-
+      <!--
       <gridster [options]="options">
         @for (item of board; track item) {
         <gridster-item [item]="item">
@@ -49,6 +49,7 @@ export type Board = Map<string, Piece>;
         </gridster-item>
         }
       </gridster>
+    </div> -->
     </div>
   `,
 })
